@@ -1,7 +1,23 @@
+import { Routes, Route } from "react-router-dom"
+import Navbar from "./components/layout/Navbar"
+import Home from "./components/pages/Home"
+import About from "./components/pages/About"
+import NotFound from "./components/pages/NotFound"
+import Footer from "./components/layout/Footer"
+
 function App() {
   return (
-    <div className="App">
-      <div className="bg-current">app</div>
+    <div className="bg-base h-screen w-full flex flex-col justify-between">
+      <Navbar />
+      <main className="container mx-auto px-3">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/notfound" element={<NotFound />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
     </div>
   )
 }
