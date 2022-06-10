@@ -5,13 +5,27 @@ const github = axios.create({
 })
 
 const searchUsers = async (text) => {
-  const params = new URLSearchParams({
-    q: text,
+  const res = await github.get(`/search/users`, {
+    params: {
+      q: text,
+    },
   })
-
-  const res = await github.get(`/search/users?${params}`)
 
   return res.data.items
 }
 
-export { searchUsers }
+const getUserAndRepos = async (login) => {
+  const [{ data: user }, { data: repos }] = await Promise.all([
+    github.get(`/users/${login}`),
+    github.get(`/users/${login}/repos`, {
+      params: {
+        sort: "created",
+        per_page: 10,
+      },
+    }),
+  ])
+
+  return { user, repos }
+}
+
+export { searchUsers, getUserAndRepos }

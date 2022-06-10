@@ -6,6 +6,9 @@ const githubReducer = (state, action) => {
       return { ...state, loading: true }
     case "CLEAR_USERS":
       return { ...state, users: [] }
+    case "SET_USER_REPO":
+      const { user, repos } = action.payload
+      return { ...state, user, repos, loading: false }
     default:
       throw new Error(`unhandled action type - ${action.type}`)
   }

@@ -1,16 +1,18 @@
 import { useState } from "react"
+import { useAlert } from "../context/alert/AlertContext"
 import { searchUsers } from "../context/github/githubActions"
 import { useGithub } from "../context/github/GithubContext"
 
 const UserSearch = () => {
   const [text, setText] = useState("")
   const { dispatch, users } = useGithub()
+  const { setAlert } = useAlert()
 
   const onSubmit = async (e) => {
     e.preventDefault()
 
     if (text.trim() === "") {
-      return alert("Please Enter A Search Value")
+      return setAlert({ msg: "Please Enter A Search Value", type: "error" })
     }
 
     dispatch({ type: "SET_LOADING" })
@@ -21,7 +23,7 @@ const UserSearch = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">
       <form onSubmit={(e) => onSubmit(e)} className="">
         <div className="relative">
           <input
